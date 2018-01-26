@@ -14,14 +14,14 @@ As propriedades e tipos de valores para cada propriedade desse objeto devem ser:
 - `caminhouQuantosMetros` - Number - recebe "zero" por padrão
 */
 var pessoa = {
-	nome: 'Douglas',
-	sobrenome: 'Lopes',
-	sexo: 'masculino',
-	idade: 28,
-	altura: 1.89,
-	peso: 90,
-	andando:  false,
-	caminhouQuantosMetros: 0
+	nome           : 'Douglas',
+	sobrenome      : 'Lopes',
+	sexo           : 'masculino',
+	idade          : 28,
+	altura         : 1.89,
+	peso           : 90,
+	andando        : false,
+	andouQtdMetros : 0
 };
 
 /*
@@ -47,7 +47,7 @@ booleano que representa "verdadeiro";
 */
 pessoa.andar = function( distancia ) {
 	if ( distancia !== undefined ) {
-		pessoa.caminhouQuantosMetros += distancia;
+		pessoa.andouQtdMetros += distancia;
 		pessoa.andando = true;
 
 		return distancia;
@@ -146,11 +146,11 @@ Agora, faça a `pessoa` caminhar alguns metros, invocando o método `andar` 3x,
 com metragens diferentes passadas por parâmetro.
 */
 pessoa.andar(50); 				// 50
-pessoa.caminhouQuantosMetros; 	// 50
+pessoa.andouQtdMetros; 	// 50
 pessoa.andar(60); 				// 60
-pessoa.caminhouQuantosMetros; 	// 110
+pessoa.andouQtdMetros; 	// 110
 pessoa.andar(70); 				// 70
-pessoa.caminhouQuantosMetros; 	// 180
+pessoa.andouQtdMetros; 	// 180
 
 /*
 A pessoa ainda está andando? (Use a instrução para responder e comentários
@@ -174,7 +174,7 @@ pessoa.andando; // false
 Quantos metros a pessoa andou? (Use uma instrução para responder e comentários
 inline ao lado da instrução para mostrar a resposta retornada)
 */
-pessoa.caminhouQuantosMetros; // 180
+pessoa.andouQtdMetros; // 180
 
 /*
 Agora vamos deixar a brincadeira um pouco mais divertida! :D
@@ -196,9 +196,9 @@ correta, de acordo com os dados inseridos no objeto.
 pessoa.apresentacao = function() {
 	var artigo = pessoa.sexo === 'feminino' ? 'a' : 'o';
 	var ano    = pessoa.idade === 1 ? 'ano' : 'anos';
-	var metro  = pessoa.caminhouQuantosMetros == 1 ? 'metro' : 'metros';
+	var metro  = pessoa.andouQtdMetros == 1 ? 'metro' : 'metros';
 
-	return 'Olá, eu sou ' + artigo + ' ' + pessoa.nomeCompleto() + ', tenho ' + pessoa.idade + ' ' + ano + ', ' + pessoa.altura + ', meu peso é ' + pessoa.peso + 'kg e, só hoje, eu já caminhei ' + pessoa.caminhouQuantosMetros + ' ' + metro + '!';
+	return 'Olá, eu sou ' + artigo + ' ' + pessoa.nomeCompleto() + ', tenho ' + pessoa.idade + ' ' + ano + ', ' + pessoa.altura + ', meu peso é ' + pessoa.peso + 'kg e, só hoje, eu já caminhei ' + pessoa.andouQtdMetros + ' ' + metro + '!';
 }
 
 // Agora, apresente-se ;)
