@@ -22,7 +22,7 @@
 		name    : 'Douglas Lopes',
 		age     : 28,
 		weight  : 110,
-		birthday: '16/11/1989'
+		birthday: '16/11'
 	};
 
 	/*
