@@ -108,7 +108,7 @@
 		var book = books[i];
 
 		for ( var prop in book ) {
-			console.log( book + ' : ' + book[prop] );
+			console.log( prop + ' : ' + book[prop] );
 		}
 	}
 
@@ -135,5 +135,5 @@
 	/*
 	Mostre todos os itens do array acima, odenados alfabéticamente.
 	*/
-	console.log( myName.sort().join('') );
+	console.log( myName.sort() );
 })();
