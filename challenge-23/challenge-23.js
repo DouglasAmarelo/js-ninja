@@ -40,8 +40,8 @@
 	// var $n9 = doc.querySelector( '[data-js="n9"]' );
 	// var $n0 = doc.querySelector( '[data-js="n0"]' );
 
-	var $buttons = doc.querySelectorAll( '[data-js^="n"], [data-js^="op-"]' );
-	// var $buttons = doc.querySelectorAll( 'button' );
+	var $numberButtons = doc.querySelectorAll( '[data-js^="n"]' );
+	var $operationButtons = doc.querySelectorAll( '[data-js^="op-"]' );
 
 	// Symbols
 	var $sum   = doc.querySelector( '[data-js="op-sum"]' );
@@ -52,15 +52,29 @@
 	var $clean = doc.querySelector( '[data-js="clean"]' );
 
 	var screenNumbers = [];
+	var screenLength;
 
-	$buttons.forEach(function( item, index ) {
+	$numberButtons.forEach(function( item ) {
 		item.addEventListener('click', function( event ) {
 			event.preventDefault();
+
 			updateScreen( this.innerText );
 
-			console.log( screenNumbers );
+		}, false);
+	});
 
-			console.log( justNumbers( screenNumbers ) );
+	$operationButtons.forEach(function( item ) {
+		item.addEventListener('click', function( event ) {
+			event.preventDefault();
+
+			var regex = /\D+/gim;
+
+			if ( regex.test( screenNumbers[ screenLength ] ) ) {
+				screenNumbers.pop();
+			}
+
+			updateScreen( this.innerText );
+
 		}, false);
 	});
 
@@ -71,7 +85,11 @@
 
 	function updateScreen( content ) {
 		screenNumbers.push( content );
+
 		$screen.value = screenNumbers.join( '' );
+		screenLength = screenNumbers.length - 1;
+
+		console.log( screenNumbers );
 	}
 
 	function clearScreen() {
@@ -80,9 +98,7 @@
 	}
 
 	function justNumbers( arr ) {
-		typeof arr;
-		typeof arr.join( ', ');
-		// arr.replace( /\D+/g, '' );
+		return arr.join( '' ).replace( /\D+/g, ', ' );
 	}
 
 })( window, document );
