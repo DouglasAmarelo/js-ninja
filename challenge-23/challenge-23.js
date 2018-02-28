@@ -67,9 +67,7 @@
 		item.addEventListener('click', function( event ) {
 			event.preventDefault();
 
-			var regex = /\D+/gim;
-
-			if ( regex.test( screenNumbers[ screenLength ] ) ) {
+			if ( ! hasNumber( screenNumbers[ screenLength ] ) ) {
 				screenNumbers.pop();
 			}
 
@@ -83,8 +81,8 @@
 		clearScreen();
 	});
 
-	function updateScreen( content ) {
-		screenNumbers.push( content );
+	function updateScreen( str ) {
+		screenNumbers.push( str );
 
 		$screen.value = screenNumbers.join( '' );
 		screenLength = screenNumbers.length - 1;
@@ -97,8 +95,11 @@
 		$screen.value = 0;
 	}
 
-	function justNumbers( arr ) {
-		return arr.join( '' ).replace( /\D+/g, ', ' );
+	function hasNumber( str ) {
+		var regex = /\d+/gim;
+
+		return regex.test( str );
 	}
+
 
 })( window, document );
