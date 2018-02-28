@@ -28,26 +28,11 @@
 	// Screen
 	var $screen = doc.querySelector( '[data-js="screen"]' );
 
-	// Numbers
-	// var $n1 = doc.querySelector( '[data-js="n1"]' );
-	// var $n2 = doc.querySelector( '[data-js="n2"]' );
-	// var $n3 = doc.querySelector( '[data-js="n3"]' );
-	// var $n4 = doc.querySelector( '[data-js="n4"]' );
-	// var $n5 = doc.querySelector( '[data-js="n5"]' );
-	// var $n6 = doc.querySelector( '[data-js="n6"]' );
-	// var $n7 = doc.querySelector( '[data-js="n7"]' );
-	// var $n8 = doc.querySelector( '[data-js="n8"]' );
-	// var $n9 = doc.querySelector( '[data-js="n9"]' );
-	// var $n0 = doc.querySelector( '[data-js="n0"]' );
-
+	// Buttons
 	var $numberButtons = doc.querySelectorAll( '[data-js^="n"]' );
 	var $operationButtons = doc.querySelectorAll( '[data-js^="op-"]' );
 
 	// Symbols
-	var $sum   = doc.querySelector( '[data-js="op-sum"]' );
-	var $sub   = doc.querySelector( '[data-js="op-subtraction"]' );
-	var $mult  = doc.querySelector( '[data-js="op-multiplication"]' );
-	var $div   = doc.querySelector( '[data-js="op-division"]' );
 	var $equal = doc.querySelector( '[data-js="equal"]' );
 	var $clean = doc.querySelector( '[data-js="clean"]' );
 
@@ -86,8 +71,6 @@
 
 		$screen.value = screenNumbers.join( '' );
 		screenLength = screenNumbers.length - 1;
-
-		console.log( screenNumbers );
 	}
 
 	function clearScreen() {
@@ -100,6 +83,5 @@
 
 		return regex.test( str );
 	}
-
 
 })( window, document );
