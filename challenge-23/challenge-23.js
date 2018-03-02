@@ -39,8 +39,10 @@
 	var screenNumbers = [];
 	var screenLength;
 
-	$numberButtons.forEach(function( item ) {
-		item.addEventListener('click', function( event ) {
+	console.log( $numberButtons );
+
+	$numberButtons.forEach(function( button ) {
+		button.addEventListener('click', function( event ) {
 			event.preventDefault();
 
 			updateScreen( this.innerText );
@@ -48,11 +50,11 @@
 		}, false);
 	});
 
-	$operationButtons.forEach(function( item ) {
-		item.addEventListener('click', function( event ) {
+	$operationButtons.forEach(function( button ) {
+		button.addEventListener('click', function( event ) {
 			event.preventDefault();
 
-			if ( ! hasNumber( screenNumbers[ screenLength ] ) ) {
+			if ( isLastItemOperator( screenNumbers[ screenLength ] ) ) {
 				screenNumbers.pop();
 			}
 
@@ -78,8 +80,8 @@
 		$screen.value = 0;
 	}
 
-	function hasNumber( str ) {
-		var regex = /\d+/gim;
+	function isLastItemOperator( str ) {
+		var regex = /\D+/gim;
 
 		return regex.test( str );
 	}
