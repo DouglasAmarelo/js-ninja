@@ -39,8 +39,6 @@
 	var screenNumbers = [];
 	var screenLength;
 
-	console.log( $numberButtons );
-
 	$numberButtons.forEach(function( button ) {
 		button.addEventListener('click', function( event ) {
 			event.preventDefault();
@@ -54,9 +52,7 @@
 		button.addEventListener('click', function( event ) {
 			event.preventDefault();
 
-			if ( isLastItemOperator( screenNumbers[ screenLength ] ) ) {
-				screenNumbers.pop();
-			}
+			removeLastItemIfItIsAnOperator();
 
 			updateScreen( this.innerText );
 
@@ -68,8 +64,39 @@
 		clearScreen();
 	});
 
+	$equal.addEventListener('click', function( event ) {
+		event.preventDefault();
+
+		removeLastItemIfItIsAnOperator();
+
+		var allValues = $screen.value.match(/\d+[+x÷-]?/g);
+
+		var result = allValues.reduce(function( accumulated, actual ) {
+			var firstValue = accumulated.slice(0, -1);
+			var operator   = accumulated.split( '' ).pop();
+			var lastValue  = actual;
+
+			switch ( operator ) {
+				case '+':
+					return Number( firstValue ) + Number( lastValue );
+				case '-':
+					return Number( firstValue ) - Number( lastValue );
+				case 'x':
+					return Number( firstValue ) * Number( lastValue );
+				case '÷':
+					return Number( firstValue ) / Number( lastValue );
+			}
+		});
+
+		screenNumbers = [];
+		updateScreen( result );
+
+	}, false);
+
 	function updateScreen( str ) {
-		screenNumbers.push( str );
+		if ( str !== undefined ) {
+			screenNumbers.push( str );
+		}
 
 		$screen.value = screenNumbers.join( '' );
 		screenLength = screenNumbers.length - 1;
@@ -80,10 +107,16 @@
 		$screen.value = 0;
 	}
 
-	function isLastItemOperator( str ) {
+	function isLastItemAnOperator( str ) {
 		var regex = /\D+/gim;
 
 		return regex.test( str );
+	}
+
+	function removeLastItemIfItIsAnOperator() {
+		if ( isLastItemAnOperator( screenNumbers[ screenLength ] ) ) {
+			screenNumbers.pop();
+		}
 	}
 
 })( window, document );
