@@ -29,40 +29,34 @@
 	var $screen = doc.querySelector( '[data-js="screen"]' );
 
 	// Buttons
-	var $numberButtons = doc.querySelectorAll( '[data-js^="n"]' );
-	var $operationButtons = doc.querySelectorAll( '[data-js^="op-"]' );
-
-	// Symbols
-	var $equal = doc.querySelector( '[data-js="equal"]' );
-	var $clean = doc.querySelector( '[data-js="clean"]' );
+	var $numButtons = doc.querySelectorAll( '[data-js^="n"]' );
+	var $opButtons  = doc.querySelectorAll( '[data-js^="op-"]' );
+	var $equal      = doc.querySelector( '[data-js="equal"]' );
+	var $clean      = doc.querySelector( '[data-js="clean"]' );
 
 	var screenNumbers = [];
 	var screenLength;
 
-	$numberButtons.forEach(function( button ) {
-		button.addEventListener('click', function( event ) {
-			event.preventDefault();
-
-			updateScreen( this.innerText );
-
-		}, false);
+	// Click events
+	$numButtons.forEach(function( button ) {
+		button.addEventListener('click', numButtonsClick, false);
 	});
 
-	$operationButtons.forEach(function( button ) {
-		button.addEventListener('click', function( event ) {
-			event.preventDefault();
-
-			removeLastItemIfItIsAnOperator();
-
-			updateScreen( this.innerText );
-
-		}, false);
+	$opButtons.forEach(function( button ) {
+		button.addEventListener('click', opButtonsClick, false);
 	});
 
-	$clean.addEventListener('click', function( event ) {
-		event.preventDefault();
-		clearScreen();
-	});
+	$clean.addEventListener('click', clearScreen, false);
+
+	function numButtonsClick() {
+		updateScreen( this.innerText );
+	}
+
+	function opButtonsClick() {
+		removeLastItemIfItIsAnOperator();
+		updateScreen( this.innerText );
+	}
+
 
 	$equal.addEventListener('click', function( event ) {
 		event.preventDefault();
@@ -109,7 +103,6 @@
 
 	function isLastItemAnOperator( str ) {
 		var regex = /\D+/gim;
-
 		return regex.test( str );
 	}
 

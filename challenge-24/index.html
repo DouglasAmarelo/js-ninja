@@ -48,51 +48,60 @@
 		button.clean { font-size: 16px; }
 
 		.right { float: right; }
+
 		.left { display: inline-block; }
+
 	</style>
 </head>
 <body>
 	<div class="calc">
 		<div>
-			<input type="text" data-js="screen" value="0" readonly>
+			<input type="text" value="0" readonly data-js="visor">
 		</div>
 
-		<div class="left">
+		<div class="buttons-numbers left">
 			<div>
-				<button data-js="n7">7</button>
-				<button data-js="n8">8</button>
-				<button data-js="n9">9</button>
+				<button data-js="button-number" value="7">7</button>
+				<button data-js="button-number" value="8">8</button>
+				<button data-js="button-number" value="9">9</button>
 			</div>
 
 			<div>
-				<button data-js="n4">4</button>
-				<button data-js="n5">5</button>
-				<button data-js="n6">6</button>
+				<button data-js="button-number" value="4">4</button>
+				<button data-js="button-number" value="5">5</button>
+				<button data-js="button-number" value="6">6</button>
 			</div>
 
 			<div>
-				<button data-js="n1">1</button>
-				<button data-js="n2">2</button>
-				<button data-js="n3">3</button>
+				<button data-js="button-number" value="1">1</button>
+				<button data-js="button-number" value="2">2</button>
+				<button data-js="button-number" value="3">3</button>
 			</div>
 
 			<div>
-				<button data-js="n0">0</button>
-				<button class="clean" data-js="clean">CE</button>
-				<button data-js="equal">=</button>
+				<button data-js="button-number" value="0">0</button>
+				<button data-js="button-ce" class="clean" value="ce">CE</button>
+				<button data-js="button-equal" value="=">=</button>
 			</div>
 		</div>
 
-		<div class="right">
+		<div class="operations right">
 			<div>
-				<div><button data-js="op-sum">+</button></div>
-				<div><button data-js="op-subtraction">-</button></div>
-				<div><button data-js="op-multiplication">x</button></div>
-				<div><button data-js="op-division">÷</button></div>
+				<button data-js="button-operation" value="+">+</button>
+			</div>
+			<div>
+				<button data-js="button-operation" value="-">-</button>
+			</div>
+			<div>
+				<button data-js="button-operation" value="x">x</button>
+			</div>
+			<div>
+				<button data-js="button-operation" value="÷">÷</button>
 			</div>
 		</div>
 	</div>
 
 	<script src="challenge-24.js"></script>
 </body>
+
 </html>
