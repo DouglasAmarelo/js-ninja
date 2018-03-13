@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Challenge 28</title>
+	<style>
+		input { vertical-align: top; }
+
+		input[type="text"] {
+			font-size: 1em;
+			padding: 5px 10px;
+		}
+		button[type="submit"] {
+			font-size: 12px;
+			padding: 7px 10px;
+			text-transform: uppercase;
+		}
+		table {
+			border-collapse: collapse;
+			text-align: left;
+			width: 100%;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 5px;
+		}
+		th { width: 120px; }
+	</style>
+</head>
+<body>
+	<form data-js="form-cep">
+		<input type="text" name="cep" id="cep" placeholder="Digite seu CEP">
+		<button type="submit">Buscar CEP</button>
+	</form>
+	<br>
+	<div class="messages"></div>
+	<br>
+	<table class="table">
+		<tr>
+			<th>Logradouro: </th>
+			<td class="td-logradouro"></td>
+		</tr>
+		<tr>
+			<th>Bairro: </th>
+			<td class="td-bairro"></td>
+		</tr>
+		<tr>
+			<th>Estado: </th>
+			<td class="td-uf"></td>
+		</tr>
+		<tr>
+			<th>Cidade: </th>
+			<td class="td-localidade"></td>
+		</tr>
+		<tr>
+			<th>CEP: </th>
+			<td class="td-cep"></td>
+		</tr>
+	</table>
+
+	<script src="challenge-28.js"></script>
+</body>
+</html>
