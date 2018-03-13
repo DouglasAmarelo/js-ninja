@@ -1,89 +1,6 @@
 (function( win, doc ) {
 	'use strict';
 
-	function DOM( elements ) {
-		this.element = doc.querySelectorAll( elements );
-	}
-
-	DOM.prototype.on = function on( listenerEvent, callbackFunction ) {
-		Array.prototype.map.call(this.element, function( element ) {
-			element.addEventListener( listenerEvent, callbackFunction );
-		});
-	};
-
-	DOM.prototype.off = function off( listenerEvent, callbackFunction ) {
-		Array.prototype.map.call(this.element, function( element ) {
-			element.removeEventListener( listenerEvent, callbackFunction );
-		});
-	};
-
-	DOM.prototype.get = function get() {
-		return this.element;
-	};
-
-	DOM.prototype.forEach = function forEach() {
-
-		console.log(this);
-		return Array.prototype.forEach.apply( this.element, arguments );
-	};
-
-	DOM.prototype.map = function map() {
-		return Array.prototype.map.apply( this.element, arguments );
-	};
-
-	DOM.prototype.filter = function filter() {
-		return Array.prototype.filter.apply( this.element, arguments );
-	};
-
-	DOM.prototype.reduce = function reduce() {
-		return Array.prototype.reduce.apply( this.element, arguments );
-	};
-
-	DOM.prototype.reduceRight = function reduceRight() {
-		return Array.prototype.reduceRight.apply( this.element, arguments );
-	};
-
-	DOM.prototype.every = function every() {
-		return Array.prototype.every.apply( this.element, arguments );
-	};
-
-	DOM.prototype.some = function some() {
-		return Array.prototype.some.apply( this.element, arguments );
-	};
-
-
-	DOM.prototype.isArray = function isArray( param ) {
-		return returnParam( param ) === '[object Array]';
-	}
-
-	DOM.prototype.isObject = function isObject( param ) {
-		return returnParam( param ) === '[object Object]';
-	}
-
-	DOM.prototype.isFunction = function isFunction( param ) {
-		return returnParam( param ) === '[object Function]';
-	}
-
-	DOM.prototype.isNumber = function isNumber( param ) {
-		return returnParam( param ) === '[object Number]';
-	}
-
-	DOM.prototype.isString = function isString( param ) {
-		return returnParam( param ) === '[object String]';
-	}
-
-	DOM.prototype.isBoolean = function isBoolean( param ) {
-		return returnParam( param ) === '[object Boolean]';
-	}
-
-	DOM.prototype.isNull = function isNull( param ) {
-		return returnParam( param ) === '[object Null]' || returnParam( param ) === '[object Undefined]';
-	}
-
-	function returnParam( param ) {
-		return Object.prototype.toString.call( param );
-	}
-
 	/*
 	No HTML:
 	- Crie um formulário com um input de texto que receberá um CEP e um botão
@@ -111,98 +28,91 @@
 	adicionar as informações em tela.
 	*/
 
-	var $formCep = new DOM('[data-js="form-cep"]');
-	var $campoCep     = doc.querySelector('#cep');
-	var btnSubmit    = doc.querySelector('[type="submit"]');
-	var campoMessage = doc.querySelector('.messages');
-	var ajax = new XMLHttpRequest();
-	var data;
+	function app() {
+		var $formCep     = new DOM('[data-js="form-cep"]');
+		var $campoCep    = doc.querySelector('#cep');
+		var btnSubmit    = doc.querySelector('[type="submit"]');
+		var campoMessage = doc.querySelector('.messages');
+		var ajax         = new XMLHttpRequest();
+		var data;
 
-	$formCep.on('submit', handleSubmitFormCep);
+		$formCep.on('submit', handleSubmitFormCep);
 
-	function handleSubmitFormCep( event ) {
-		event.preventDefault();
+		function handleSubmitFormCep( event ) {
+			event.preventDefault();
 
-		getDados('GET', 'https://viacep.com.br/ws/' + justNumber( $campoCep.value ) + '/json/');
-	}
+			getDados('GET', 'https://viacep.com.br/ws/' + justNumber( $campoCep.value ) + '/json/');
+		}
 
-	function justNumber( text ) {
-		var numbers = text.replace(/\D+/gmi, '');
-		return numbers;
-	}
+		function justNumber( text ) {
+			var numbers = text.replace(/\D+/gmi, '');
+			return numbers;
+		}
 
-	function changeMessage( info ) {
-		campoMessage.textContent = info;
-	}
+		function isRequestOk( ) {
+			return ajax.readyState === 4 && ajax.status === 200;
+		}
 
-	function isRequestOk( ) {
-		return ajax.readyState === 4 && ajax.status === 200;
-	}
+		function getDados( method, url ) {
+			ajax.open(method, url);
+			ajax.send();
 
-	function getDados( method, url ) {
-		ajax.open(method, url);
-		ajax.send();
+			getMessages('loading');
 
-		changeMessage( getMessages('loading') );
+			ajax.addEventListener('readystatechange', readystatechange, false );
+		}
 
-		ajax.addEventListener('readystatechange', readystatechange, false );
-	}
+		function readystatechange() {
+			if ( isRequestOk() ) {
+				getMessages('ok');
+				updateTable();
+			}
+		}
 
-	function readystatechange() {
-		if ( isRequestOk() ) {
-			changeMessage( getMessages('ok') );
-			updateTable();
+		function parseData() {
+			var result;
+
+			try {
+				result = JSON.parse( ajax.responseText );
+			}
+			catch(e) {
+				result = null;
+			}
+
+			return result;
+		}
+
+		function updateTable() {
+			var data = parseData();
+
+			if( !data ) {
+				getMessages('error');
+
+				doc.querySelector('.td-logradouro').innerText = '-';
+				doc.querySelector('.td-bairro').innerText     = '-';
+				doc.querySelector('.td-uf').innerText         = '-';
+				doc.querySelector('.td-localidade').innerText = '-';
+				doc.querySelector('.td-cep').innerText        = '-';
+			}
+
+			doc.querySelector('.td-logradouro').innerText = data.logradouro;
+			doc.querySelector('.td-bairro').innerText     = data.bairro;
+			doc.querySelector('.td-uf').innerText         = data.uf;
+			doc.querySelector('.td-localidade').innerText = data.localidade;
+			doc.querySelector('.td-cep').innerText        = data.cep;
+		}
+
+		function getMessages( type ) {
+			var messages = {
+				loading : 'Buscando informações para o CEP ' + $campoCep.value + '...',
+				ok      : 'Endereço referente ao CEP ' + $campoCep.value,
+				error   : 'Não encontramos o endereço para o CEP ' + $campoCep.value + '.'
+			};
+
+			campoMessage.textContent = messages[type];
 		}
 	}
 
-	function parseData() {
-		var result;
-		try {
-			result = JSON.parse( ajax.responseText )
-		}
-		catch( e ) {
-			result = null;
-		}
+	app();
 
-		return result;
-	}
-
-	function updateTable() {
-		var data = parseData();
-
-		if( !data ) {
-			changeMessage( getMessages('error') );
-		}
-		doc.querySelector('.td-logradouro').innerText = data.logradouro;
-		doc.querySelector('.td-bairro').innerText     = data.bairro;
-		doc.querySelector('.td-uf').innerText         = data.uf;
-		doc.querySelector('.td-localidade').innerText = data.localidade;
-		doc.querySelector('.td-cep').innerText        = data.cep;
-	}
-
-	function getMessages( type ) {
-		var messages;
-		return messages = {
-			loading : 'Buscando informações para o CEP ' + $campoCep.value + '...',
-			ok      : 'Endereço referente ao CEP ' + $campoCep.value,
-			error   : 'Não encontramos o endereço para o CEP ' + $campoCep.value + '.'
-		}[type];
-	}
-
-	/*
-	function updateTable ( dados ) {
-		for( var dado in dados ) {
-			var txtKey   = dado;
-			var txtValue = dados[dado];
-			var td       = doc.querySelector('.td-' + dado);
-
-			if ( td )
-				td.innerHTML = txtValue;
-
-				changeMessage('');
-		}
-	}
-	*/
-
-
-})( window, document );
+})( window, document, window.DOM );
