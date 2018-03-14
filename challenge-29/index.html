@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Challenge 29</title>
+	<style>
+		.main {
+			border: 1px solid #ccc;
+			margin: 3em auto;
+			max-width: 600px;
+			padding: 3em;
+		}
+		input {
+			vertical-align: top;
+			width: 45%;
+		}
+
+		input[type="text"] {
+			font-size: 1em;
+			padding: 5px 10px;
+			margin: 5px 0;
+		}
+		button[type="submit"] {
+			font-size: 12px;
+			padding: 7px 10px;
+			margin-top: 5px;
+			text-transform: uppercase;
+		}
+		table {
+			border-collapse: collapse;
+			text-align: left;
+			width: 100%;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 5px;
+		}
+		th { width: 150px; }
+	</style>
+</head>
+<body>
+	<div class="main">
+		<h1>Informações da empresa</h1>
+
+		<p class="nome-empresa">Nome: <span></span></p>
+		<p class="telefone-empresa">Telefone: <span></span></p>
+
+		<br>
+
+		<h2>Cadastro de carros</h2>
+		<form data-js="form-carros">
+			<div>
+				<input type="text" name="" id="" data-js="imagem" placeholder="Imagem do carro">
+
+				<input type="text" name="" id="" data-js="marca-modelo" placeholder="Marca / Modelo">
+
+				<input type="text" name="" id="" data-js="ano" placeholder="Ano">
+
+				<input type="text" name="" id="" data-js="placa" placeholder="Placa">
+
+				<input type="text" name="" id="" data-js="cor" placeholder="Cor">
+
+				<button type="submit" data-js="cadastrar">Cadastrar</button>
+			</div>
+		</form>
+
+		<br>
+
+		<h2>Carros cadastrados</h2>
+
+		<table class="table">
+			<tr>
+				<th>Imagem do carro: </th>
+				<td class="td-imagem"></td>
+			</tr>
+			<tr>
+				<th>Marca / Modelo: </th>
+				<td class="td-marca-modelo"></td>
+			</tr>
+			<tr>
+				<th>Ano: </th>
+				<td class="td-ano"></td>
+			</tr>
+			<tr>
+				<th>Placa: </th>
+				<td class="td-placa"></td>
+			</tr>
+			<tr>
+				<th>Cor: </th>
+				<td class="td-cor"></td>
+			</tr>
+		</table>
+	</div>
+
+	<script src="dom.js"></script>
+	<script src="challenge-29.js"></script>
+</body>
+</html>
