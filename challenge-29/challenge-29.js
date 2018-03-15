@@ -43,6 +43,7 @@
 		var $cor        = doc.querySelector('[data-js="cor"]');
 		var $cadastrar  = doc.querySelector('[data-js="cadastrar"]');
 
+		var $table = doc.querySelector('.table');
 		var tdImagem      = doc.querySelector('.td-imagem');
 		var tdMarcaModelo = doc.querySelector('.td-marca-modelo');
 		var tdAno         = doc.querySelector('.td-ano');
@@ -62,14 +63,14 @@
 		getData();
 
 		function parseData() {
-			var result;
+			var result = '';
 
 			if ( ajax.readyState === 4 && ajax.status === 200 ) {
 				try {
 					result = JSON.parse( ajax.responseText );
 				}
 				catch(e) {
-					result = null;
+					console.log('Errooooo: ' + e);
 				}
 			}
 
@@ -84,17 +85,28 @@
 
 		function handleSubmit( event ) {
 			event.preventDefault();
+
+			if ( $imagem.value === '' || $marca.value === '' || $ano.value === '' || $placa.value === '' || $cor.value === '' ) {
+				alert('Favor preencher todos os campos');
+
+				return;
+			}
 			updateTable();
 		}
 
 		function updateTable() {
-			tdImagem.textContent = $imagem.value;
-			tdMarcaModelo.textContent = $marca.value;
-			tdAno.textContent = $ano.value;
-			tdPlaca.textContent = $placa.value;
-			tdCor.textContent = $cor.value;
-		}
+			var template = `
+				<td>${ $imagem.value }</td>
+				<td>${ $marca.value }</td>
+				<td>${ $ano.value }</td>
+				<td>${ $placa.value }</td>
+				<td>${ $cor.value }</td>
+			`;
+			var $tr = doc.createElement('tr');
 
+			$tr.innerHTML = template;
+			$table.appendChild( $tr );
+		}
 	}
 
 	app();
