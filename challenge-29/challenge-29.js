@@ -33,7 +33,7 @@
 
 	function app() {
 		var $nomeEmpresa = doc.querySelector('.nome-empresa');
-		var $telEmpresa = doc.querySelector('.telefone-empresa');
+		var $telEmpresa  = doc.querySelector('.telefone-empresa');
 
 		var $formCarros = doc.querySelector('[data-js="form-carros"]');
 		var $imagem     = doc.querySelector('[data-js="imagem"]');
@@ -43,7 +43,7 @@
 		var $cor        = doc.querySelector('[data-js="cor"]');
 		var $cadastrar  = doc.querySelector('[data-js="cadastrar"]');
 
-		var $table = doc.querySelector('.table');
+		var $table        = doc.querySelector('.table');
 		var tdImagem      = doc.querySelector('.td-imagem');
 		var tdMarcaModelo = doc.querySelector('.td-marca-modelo');
 		var tdAno         = doc.querySelector('.td-ano');
@@ -52,63 +52,71 @@
 
 		var ajax = new XMLHttpRequest();
 
-		$formCarros.addEventListener('submit', handleSubmit, false);
+		var self;
 
-		function getData() {
-			ajax.open('GET', 'data/company.json');
-			ajax.send();
+		return {
+			init: function init() {
+				self = this;
+				$formCarros.addEventListener('submit', self.handleSubmit, false);
 
-			ajax.addEventListener('readystatechange', updateCompantInfo, false);
-		}
-		getData();
+				self.getData();
+			},
 
-		function parseData() {
-			var result = '';
+			getData: function getData() {
+				ajax.open('GET', 'data/company.json');
+				ajax.send();
 
-			if ( ajax.readyState === 4 && ajax.status === 200 ) {
-				try {
-					result = JSON.parse( ajax.responseText );
+				ajax.addEventListener('readystatechange', self.updateCompantInfo, false);
+			},
+
+			parseData: function parseData() {
+				var result = '';
+
+				if ( ajax.readyState === 4 && ajax.status === 200 ) {
+					try {
+						result = JSON.parse( ajax.responseText );
+					}
+					catch(e) {
+						console.log('Errooooo: ' + e);
+					}
 				}
-				catch(e) {
-					console.log('Errooooo: ' + e);
+
+				return result;
+			},
+
+			updateCompantInfo: function updateCompantInfo() {
+				var data = self.parseData();
+				$nomeEmpresa.textContent = data.name;
+				$telEmpresa.textContent = data.phone;
+			},
+
+			handleSubmit: function handleSubmit( event ) {
+				event.preventDefault();
+
+				if ( $imagem.value === '' || $marca.value === '' || $ano.value === '' || $placa.value === '' || $cor.value === '' ) {
+					alert('Favor preencher todos os campos');
+					return;
 				}
+
+				self.updateTable();
+			},
+
+			updateTable: function updateTable() {
+				var template = `
+					<td>${ $imagem.value }</td>
+					<td>${ $marca.value }</td>
+					<td>${ $ano.value }</td>
+					<td>${ $placa.value }</td>
+					<td>${ $cor.value }</td>
+				`;
+				var $tr = doc.createElement('tr');
+
+				$tr.innerHTML = template;
+				$table.appendChild( $tr );
 			}
-
-			return result;
-		}
-
-		function updateCompantInfo() {
-			var data = parseData();
-			$nomeEmpresa.textContent = data.name;
-			$telEmpresa.textContent = data.phone;
-		}
-
-		function handleSubmit( event ) {
-			event.preventDefault();
-
-			if ( $imagem.value === '' || $marca.value === '' || $ano.value === '' || $placa.value === '' || $cor.value === '' ) {
-				alert('Favor preencher todos os campos');
-
-				return;
-			}
-			updateTable();
-		}
-
-		function updateTable() {
-			var template = `
-				<td>${ $imagem.value }</td>
-				<td>${ $marca.value }</td>
-				<td>${ $ano.value }</td>
-				<td>${ $placa.value }</td>
-				<td>${ $cor.value }</td>
-			`;
-			var $tr = doc.createElement('tr');
-
-			$tr.innerHTML = template;
-			$table.appendChild( $tr );
 		}
 	}
 
-	app();
+	app().init();
 
 })( window, document );
