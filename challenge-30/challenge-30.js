@@ -2,53 +2,48 @@
 	'use strict';
 
 	/*
-	Vamos estruturar um pequeno app utilizando módulos.
-	Nosso APP vai ser um cadastro de carros. Vamos fazê-lo por partes.
-	A primeira etapa vai ser o cadastro de veículos, de deverá funcionar da
-	seguinte forma:
-	- No início do arquivo, deverá ter as informações da sua empresa - nome e
-	telefone (já vamos ver como isso vai ser feito)
-	- Ao abrir a tela, ainda não teremos carros cadastrados. Então deverá ter
-	um formulário para cadastro do carro, com os seguintes campos:
-	  - Imagem do carro (deverá aceitar uma URL)
-	  - Marca / Modelo
-	  - Ano
-	  - Placa
-	  - Cor
-	  - e um botão "Cadastrar"
-	Logo abaixo do formulário, deverá ter uma tabela que irá mostrar todos os
-	carros cadastrados. Ao clicar no botão de cadastrar, o novo carro deverá
-	aparecer no final da tabela.
-	Agora você precisa dar um nome para o seu app. Imagine que ele seja uma
-	empresa que vende carros. Esse nosso app será só um catálogo, por enquanto.
-	Dê um nome para a empresa e um telefone fictício, preechendo essas informações
-	no arquivo company.json que já está criado.
-	Essas informações devem ser adicionadas no HTML via Ajax.
-	Parte técnica:
-	Separe o nosso módulo de DOM criado nas últimas aulas em
-	um arquivo DOM.js.
-	E aqui nesse arquivo, faça a lógica para cadastrar os carros, em um módulo
-	que será nomeado de "app".
+	A loja de carros será nosso desafio final. Na aula anterior, você fez a parte
+	do cadastro dos carros. Agora nós vamos começar a deixar ele com cara de
+	projeto mesmo.
+	Crie um novo repositório na sua conta do GitHub, com o nome do seu projeto.
+	Na hora de criar, o GitHub te dá a opção de criar o repositório com um
+	README. Use essa opção.
+	Após criar o repositório, clone ele na sua máquina.
+	Crie uma nova branch chamada `challenge-30`, e copie tudo o que foi feito no
+	desafio da aula anterior para esse novo repositório, nessa branch
+	`challenge-30`.
+	Adicione um arquivo na raiz desse novo repositório chamado `.gitignore`.
+	O conteúdeo desse arquivo deve ser somente as duas linhas abaixo:
+	node_modules
+	npm-debug.log
+	Faça as melhorias que você achar que são necessárias no seu código, removendo
+	duplicações, deixando-o o mais legível possível, e então suba essa alteração
+	para o repositório do seu projeto.
+	Envie um pull request da branch `challenge-30` para a `master` e cole aqui
+	nesse arquivo, dentro do `console.log`, o link para o pull request no seu
+	projeto.
 	*/
+
+	// console.log('Link do pull request do seu projeto');
 
 	function app() {
 		var $nomeEmpresa = doc.querySelector('.nome-empresa');
 		var $telEmpresa  = doc.querySelector('.telefone-empresa');
 
 		var $formCarros = doc.querySelector('[data-js="form-carros"]');
-		var $imagem     = doc.querySelector('[data-js="imagem"]');
-		var $marca      = doc.querySelector('[data-js="marca-modelo"]');
-		var $ano        = doc.querySelector('[data-js="ano"]');
-		var $placa      = doc.querySelector('[data-js="placa"]');
-		var $cor        = doc.querySelector('[data-js="cor"]');
-		var $cadastrar  = doc.querySelector('[data-js="cadastrar"]');
+		var $imagem     = $formCarros.querySelector('[data-js="imagem"]');
+		var $marca      = $formCarros.querySelector('[data-js="marca-modelo"]');
+		var $ano        = $formCarros.querySelector('[data-js="ano"]');
+		var $placa      = $formCarros.querySelector('[data-js="placa"]');
+		var $cor        = $formCarros.querySelector('[data-js="cor"]');
+		var $cadastrar  = $formCarros.querySelector('[data-js="cadastrar"]');
 
 		var $table        = doc.querySelector('.table');
-		var tdImagem      = doc.querySelector('.td-imagem');
-		var tdMarcaModelo = doc.querySelector('.td-marca-modelo');
-		var tdAno         = doc.querySelector('.td-ano');
-		var tdPlaca       = doc.querySelector('.td-placa');
-		var tdCor         = doc.querySelector('.td-cor');
+		var tdImagem      = $table.querySelector('.td-imagem');
+		var tdMarcaModelo = $table.querySelector('.td-marca-modelo');
+		var tdAno         = $table.querySelector('.td-ano');
+		var tdPlaca       = $table.querySelector('.td-placa');
+		var tdCor         = $table.querySelector('.td-cor');
 
 		var ajax = new XMLHttpRequest();
 
@@ -89,8 +84,8 @@
 				$telEmpresa.textContent = data.phone;
 			},
 
-			handleSubmit: function( event ) {
-				event.preventDefault();
+			handleSubmit: function(e) {
+				e.preventDefault();
 
 				if ( $imagem.value === '' || $marca.value === '' || $ano.value === '' || $placa.value === '' || $cor.value === '' ) {
 					alert('Favor preencher todos os campos');
@@ -114,11 +109,10 @@
 
 			updateTable: function() {
 				var template = `
-					<td>${ this.randomImage() }</td>
+					<td>${ self.randomImage() }</td>
 					<td>${ $marca.value }</td>
 					<td>${ $ano.value }</td>
 					<td>${ $placa.value }</td>
-					<td>${ $cor.value }</td>
 					<td>${ $cor.value }</td>
 				`;
 				var $tr = doc.createElement('tr');
