@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Challenge 31</title>
+	<style>
+		body {
+			font-size: 14px;
+		}
+		.main {
+			border: 1px solid #ccc;
+			margin: 1em auto;
+			max-width: 1280px;
+			overflow: auto;
+			padding: 1em;
+			zoom: 1;
+		}
+		.left {
+			background-color: #f1f1f1;
+			padding: 1em;
+			float: left;
+		}
+		.left,
+		.right {
+			width: 46%;
+		}
+		.right {
+			background: #f1f1f1;
+			float: right;
+			padding: 1em;
+		}
+		input {
+			vertical-align: top;
+			width: 45%;
+		}
+
+		input:not([type="submit"]) {
+			font-size: 1em;
+			padding: 5px 10px;
+			margin: 5px 0;
+		}
+		button[type="submit"] {
+			font-size: 12px;
+			padding: 6px 10px;
+			margin-top: 5px;
+			text-transform: uppercase;
+		}
+		table {
+			background-color: #fff;
+			border-collapse: collapse;
+			text-align: left;
+			width: 100%;
+		}
+		th, td {
+			border: 1px solid #ccc;
+			padding: 5px;
+		}
+
+		th {
+			background-color: rgb(231, 228, 228);
+			font-size: 11px;
+			font-weight: bold;
+			text-align: center;
+			text-transform: uppercase;
+			width: 150px;
+		}
+
+		img {
+			height: auto;
+			max-width: 200;
+		}
+
+		h2 { margin: 0 0 1em 0; }
+
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="left">
+			<h2>Cadastro de carros</h2>
+			<form data-js="form-carros">
+				<div>
+					<input type="text" name="image" data-js="imagem" placeholder="Imagem do carro">
+
+					<input type="text" name="brandModel" data-js="marca-modelo" placeholder="Marca / Modelo">
+
+					<input type="number" name="year" data-js="ano" placeholder="Ano">
+
+					<input type="text" name="plate" data-js="placa" placeholder="Placa">
+
+					<input type="text" name="color" data-js="cor" placeholder="Cor">
+
+					<button type="submit" data-js="cadastrar">Cadastrar</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="right">
+			<h2>Carros cadastrados</h2>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Imagem do carro</th>
+						<th>Marca / Modelo</th>
+						<th>Ano</th>
+						<th>Placa</th>
+						<th>Cor</th>
+						<th>---</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+
+	<script src="challenge-32.js"></script>
+</body>
+</html>
